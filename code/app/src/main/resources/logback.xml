@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+
+
+<configuration>
+  <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
+  <import class="ch.qos.logback.core.ConsoleAppender"/>
+
+  <!-- <appender name="STDOUT" class="ConsoleAppender"> -->
+    <!-- <encoder class="PatternLayoutEncoder"> -->
+      <!-- <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern> -->
+    <!-- </encoder> -->
+  <!-- </appender> -->
+
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>testFile.log</file>
+    <append>true</append>
+    <!-- set immediateFlush to false for much higher logging throughput -->
+    <immediateFlush>true</immediateFlush>
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%-4relative [%thread] %-5level %logger{35} -%kvp- %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="STDOUT" class="ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- Configure the Sentry appender, overriding the logging threshold to the WARN level -->
+  <appender name="Sentry" class="io.sentry.logback.SentryAppender">
+    <options>
+      <dsn>https://a2d3770c0507b6045a1dc0f02b9c0859@o4507889188798464.ingest.us.sentry.io/4507889192271872</dsn>
+    </options>
+  </appender>
+
+
+  <root level="debug">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="Sentry" />
+    <appender-ref ref="FILE"/>
+  </root>
+
+</configuration>
